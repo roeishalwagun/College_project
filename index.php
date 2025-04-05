@@ -25,7 +25,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <!-- Main content -->
 <div id="main">
-  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  <span style="font-size:30px;cursor:pointer " onclick="openNav()">&#9776;</span>
   
   <h2 style="margin-left: 100px; margin-top: -5px">Welcome, <?= $_SESSION['username'] ?> | <a href="logout.php">Logout</a></h2>
   
