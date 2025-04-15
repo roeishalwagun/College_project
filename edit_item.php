@@ -29,14 +29,14 @@ if (isset($_POST['update'])) {
   $price = $_POST['price'];
   $desc = $_POST['description'];
 
-  $update = $conn->prepare("UPDATE jewelry SET name=?, category_id=?, price=?, description=? WHERE id=?");
-  $update->bind_param("sidsi", $name, $category_id, $price, $desc, $id);
+  $update = $conn->prepare("CALL UpdateJewelryItem(?, ?, ?, ?, ?)");
+  $update->bind_param("sidsi", $name, $desc, $price, $category_id, $id);
 
   if ($update->execute()) {
-    echo "✅ Item updated. <a href='index.php'>Go to Dashboard</a>";
+    echo "<div class='success-message'>✅ Item updated using stored procedure. <a href='index.php'>Go to Dashboard</a></div>";
     exit();
   } else {
-    echo "❌ Error: " . $update->error;
+    echo "<div class='error-message'>❌ Error: " . $update->error . "</div>";
   }
 }
 ?>

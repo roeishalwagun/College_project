@@ -12,15 +12,17 @@ if (isset($_POST['add'])) {
   $price = $_POST['price'];
   $desc = $_POST['description'];
 
-  $stmt = $conn->prepare("INSERT INTO jewelry (name, category_id, price, description) VALUES (?, ?, ?, ?)");
-  $stmt->bind_param("sids", $name, $category_id, $price, $desc);
+  echo "❌ Error: " . $stmt->error;
+$stmt = $conn->prepare("CALL AddJewelryItem(?, ?, ?, ?, ?)");
+$stock = 10; // Default stock (required for procedure); change as needed
+$stmt->bind_param("ssdii", $name, $desc, $price, $stock, $category_id);
 
-  if ($stmt->execute()) {
-    echo "✅ Item added successfully. <a href='index.php'>Go to Dashboard</a>";
-    exit();
-  } else {
-    echo "❌ Error: " . $stmt->error;
-  }
+if ($stmt->execute()) {
+  echo "<div class='success-message'>✅ Item added using stored procedure. <a href='index.php'>Go to Dashboard</a></div>";
+  exit();
+} else {
+  echo '<div class="error-message">❌ Error: ' . htmlspecialchars($stmt->error) . '</div>';
+} 
 }
 ?>
 
